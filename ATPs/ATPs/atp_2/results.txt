@@ -1,0 +1,58 @@
+
+==============================
+ATP-2: IMU Static Accuracy
+==============================
+
+PHASE 1: Place board FLAT on desk
+Waiting 5 seconds to settle...
+Recording 10 flat samples...
+  Sample 10: az_raw = 9.681 m/s^2
+  Sample 20: az_raw = 9.729 m/s^2
+  Sample 30: az_raw = 9.712 m/s^2
+  Sample 40: az_raw = 9.717 m/s^2
+  Sample 50: az_raw = 9.734 m/s^2
+  Sample 60: az_raw = 9.756 m/s^2
+  Sample 70: az_raw = 9.705 m/s^2
+  Sample 80: az_raw = 9.722 m/s^2
+  Sample 90: az_raw = 9.741 m/s^2
+  Sample 100: az_raw = 9.705 m/s^2
+
+FLAT MEAN az_raw = 9.718 m/s^2
+Expected:          9.810 +/- 0.500 m/s^2  [PASS]
+
+PHASE 2: Tilt board to 45 degrees
+Use phone inclinometer app
+Hold steady then send any character in Serial Monitor
+Recording 10 tilted samples...
+  Sample 10: az_raw = 7.009 m/s^2
+  Sample 20: az_raw = 7.123 m/s^2
+  Sample 30: az_raw = 7.222 m/s^2
+  Sample 40: az_raw = 7.415 m/s^2
+  Sample 50: az_raw = 7.143 m/s^2
+  Sample 60: az_raw = 7.049 m/s^2
+  Sample 70: az_raw = 7.083 m/s^2
+  Sample 80: az_raw = 6.901 m/s^2
+  Sample 90: az_raw = 7.001 m/s^2
+  Sample 100: az_raw = 7.056 m/s^2
+
+45 DEG MEAN az_raw = 7.058 m/s^2
+Expected:           6.940 +/- 0.500 m/s^2  [PASS]
+
+PHASE 4: Place board FLAT again and hold still
+Re-settling filter for 40 seconds...
+Filter re-settled -- starting stationary check
+PHASE 5: Hold board completely still for 30 seconds...
+
+Max az_filt (stationary) = 0.0845 m/s^2
+Required:                  < 0.100 m/s^2  [PASS]
+
+==============================
+ATP-2 COMPLETE
+------------------------------
+FLAT    [PASS]
+45 DEG  [PASS]
+FILTER  [PASS]
+------------------------------
+OVERALL [PASS]
+==============================
+Pull SD card and check atp2_dat.csv

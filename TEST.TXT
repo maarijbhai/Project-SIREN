@@ -1,0 +1,3 @@
+SYSTEM BOOT SUCCESS.
+The STM32 can successfully write to this SD card.
+hello world!!!

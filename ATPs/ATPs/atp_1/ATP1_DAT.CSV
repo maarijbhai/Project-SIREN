@@ -1,0 +1,7 @@
+# ATP-1 Boot Test Results
+peripheral,result,value
+VDD_RAIL,PASS,3.322V
+IMU,PASS,
+SD_CARD,PASS,
+GPS_UART,PASS,
+OVERALL,PASS,

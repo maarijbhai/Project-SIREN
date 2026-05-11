@@ -1,0 +1,21 @@
+LSM9DS1 IMU — I2C1
+  SDA  → PB7  (labeled D15 / I2C1 SDA on pinout)
+  SCL  → PB6  (labeled D10 / I2C1 SCL on pinout)
+  VCC  → 3.3V
+  GND  → GND
+  SDO  → GND  (forces I2C address 0x6A)
+  CS   → 3.3V (disables SPI mode, enables I2C)
+
+NEO-6M GPS — UART2
+  GPS TX → PA3  (Serial2 RX on pinout)
+  GPS RX → PA2  (Serial2 TX on pinout)
+  VCC    → 3.3V
+  GND    → GND
+
+SD Card — SPI1
+  SCK  → PA5  (SPI1 SCLK on pinout)
+  MISO → PA6  (SPI1 MISO on pinout)
+  MOSI → PA7  (SPI1 MOSI on pinout)
+  CS   → PB12 (SPI2 SSEL — used as GPIO CS)
+  VCC  → 3.3V or 5V (check your module label)
+  GND  → GND
