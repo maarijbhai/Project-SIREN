@@ -1,0 +1,29 @@
+========================================
+  SIREN ATP-7  Beacon Packet Test
+  Waiting for GPS fix...
+  Take unit outside, clear sky view.
+========================================
+# Fix acquired: sats=0
+# GPS lat=-33.957759 lon=18.460969 sats=0 hdop=-1.00
+BEACON ts=2 BE BF D4 07 C2 11 B0 93 41 02 00 00 00
+# Next beacon in 60 s
+# Next beacon in 0 s
+# GPS lat=-33.957809 lon=18.460975 sats=5 hdop=3.00
+BEACON ts=62 BE CC D4 07 C2 14 B0 93 41 3E 00 00 00
+# Next beacon in 60 s
+# Next beacon in 0 s
+# GPS lat=-33.957756 lon=18.461048 sats=6 hdop=3.01
+BEACON ts=122 BE BE D4 07 C2 3A B0 93 41 7A 00 00 00
+# Next beacon in 60 s
+# Next beacon in 0 s
+# GPS lat=-33.957790 lon=18.461114 sats=7 hdop=2.97
+BEACON ts=182 BE C7 D4 07 C2 5D B0 93 41 B6 00 00 00
+# Next beacon in 60 s
+# Next beacon in 0 s
+# GPS lat=-33.957771 lon=18.461015 sats=6 hdop=2.97
+BEACON ts=242 BE C2 D4 07 C2 29 B0 93 41 F2 00 00 00
+# Next beacon in 60 s
+# Next beacon in 0 s
+# GPS lat=-33.957775 lon=18.460987 sats=7 hdop=2.98
+BEACON ts=302 BE C3 D4 07 C2 1A B0 93 41 2E 01 00 00
+

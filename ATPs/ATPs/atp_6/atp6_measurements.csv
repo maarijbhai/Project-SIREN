@@ -1,0 +1,5 @@
+state,description,current_mA
+0,MCU only,0
+1,MCU + IMU,0
+2,MCU + IMU + GPS,0
+3,Full system,0

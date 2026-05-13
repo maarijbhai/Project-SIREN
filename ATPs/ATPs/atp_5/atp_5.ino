@@ -1,59 +1,42 @@
 // ============================================================
 // SIREN — ATP-5: SD Card Data Integrity
-// Records 10 minutes at 10ms intervals = 60000 rows
-// Writes to atp5_dat.csv — validate with validate.py
-// Pass: 60000 +/- 300 rows, zero nulls, no gaps > 15ms
+// IMU LSM9DS1  I2C:  SDA=PB7, SCL=PB6
+// SD card      SPI1: CS=PA4, SCK=PA5, MISO=PA6, MOSI=PA7
+// Target: ~71 Hz for 10 min = ~42600 rows
+// Pass:   fs*600 +/- 0.5%, zero nulls, no gaps > 15ms
+// Validate: copy atp5_dat.csv to atp_5/ then run validate.py
 // ============================================================
+
 #include <Wire.h>
 #include <SPI.h>
 #include <SD.h>
 #include <Adafruit_LSM9DS1.h>
 #include <Adafruit_Sensor.h>
 
+#define SD_CS_PIN           PA4
+#define SAMPLE_INTERVAL_MS  14UL
+#define TEST_DURATION_MS    600000UL
+#define PROGRESS_INTERVAL   30000UL
+
 Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1();
 
-#define SD_CS_PIN           PB12
-#define SAMPLE_INTERVAL_MS  10
-#define BUFFER_SIZE         100
-#define TEST_DURATION_MS    600000UL   // 10 minutes = 60000 rows
+float       az_prev     = 0.0f;
+float       az_filtered = 0.0f;
+const float alpha       = 0.995f;
 
-struct Sample {
-  uint32_t timestamp;
-  float ax, ay, az_raw, az_filt;
-  float gx, gy, gz;
-};
-Sample buffer[BUFFER_SIZE];
-uint16_t bufferIndex = 0;
-
-float az_prev     = 0.0;
-float az_filtered = 0.0;
-const float alpha = 0.995;
-
-unsigned long lastSample = 0;
-unsigned long testStart  = 0;
-bool testDone = false;
+unsigned long lastSample   = 0;
+unsigned long lastProgress = 0;
+unsigned long testStart    = 0;
+uint32_t      totalRows    = 0;
+bool          testDone     = false;
 
 File dataFile;
 
-void flushBuffer() {
-  for (uint16_t i = 0; i < bufferIndex; i++) {
-    dataFile.print(buffer[i].timestamp);  dataFile.print(",");
-    dataFile.print(buffer[i].ax, 4);      dataFile.print(",");
-    dataFile.print(buffer[i].ay, 4);      dataFile.print(",");
-    dataFile.print(buffer[i].az_raw, 4);  dataFile.print(",");
-    dataFile.print(buffer[i].az_filt, 4); dataFile.print(",");
-    dataFile.print(buffer[i].gx, 4);      dataFile.print(",");
-    dataFile.print(buffer[i].gy, 4);      dataFile.print(",");
-    dataFile.println(buffer[i].gz, 4);
-  }
-  dataFile.flush();
-  bufferIndex = 0;
-}
-
 void setup() {
   Serial.begin(115200);
-  delay(3000);
+  delay(2000);
 
+  // ── IMU — I2C ─────────────────────────────────────────────
   Wire.setSDA(PB7);
   Wire.setSCL(PB6);
   Wire.begin();
@@ -67,6 +50,11 @@ void setup() {
   lsm.setupGyro(lsm.LSM9DS1_GYROSCALE_245DPS);
   Serial.println("IMU OK");
 
+  // ── SD — SPI1: CS=PA4, SCK=PA5, MISO=PA6, MOSI=PA7 ───────
+  SPI.setMOSI(PA7);
+  SPI.setMISO(PA6);
+  SPI.setSCLK(PA5);
+
   if (!SD.begin(SD_CS_PIN)) {
     Serial.println("FATAL: SD not found");
     while (1) {}
@@ -79,42 +67,51 @@ void setup() {
   }
   dataFile.println("# ATP-5 SD Integrity Test");
   dataFile.println("timestamp_ms,ax,ay,az_raw,az_filt,gx,gy,gz");
-  dataFile.flush();
+  // No flush here — let the SD library write sectors on its own schedule
   Serial.println("SD OK -- recording to atp5_dat.csv");
-  Serial.println("Recording for 10 minutes -- do not touch");
-  Serial.println("Progress printed every 60 seconds");
+  Serial.println("Recording 10 min -- do not remove SD card");
 
-  testStart  = millis();
-  lastSample = millis();
+  testStart    = millis();
+  lastSample   = millis();
+  lastProgress = millis();
 }
 
 void loop() {
   if (testDone) return;
 
   unsigned long now     = millis();
-  uint32_t      elapsed = now - testStart;
+  uint32_t      elapsed = (uint32_t)(now - testStart);
 
+  // ── End of test ───────────────────────────────────────────
   if (elapsed >= TEST_DURATION_MS) {
-    flushBuffer();
-    dataFile.close();
-    Serial.println("DONE -- pull SD card and run validate.py");
+    dataFile.close();   // single flush at the very end
+    float finalHz = (float)totalRows / (elapsed / 1000.0f);
+    Serial.print("DONE -- ");
+    Serial.print(totalRows);
+    Serial.print(" rows, ");
+    Serial.print(elapsed / 1000);
+    Serial.print(" s, ");
+    Serial.print(finalHz, 1);
+    Serial.println(" Hz -- pull SD card and run validate.py");
     testDone = true;
     return;
   }
 
-  // Print progress every 60s
-  static uint8_t lastMinute = 0;
-  uint8_t minute = elapsed / 60000;
-  if (minute != lastMinute) {
-    lastMinute = minute;
-    Serial.print(minute);
-    Serial.print(" min elapsed -- ");
-    Serial.print(elapsed / SAMPLE_INTERVAL_MS);
-    Serial.println(" rows written");
+  // ── Progress every 30 s ───────────────────────────────────
+  if (now - lastProgress >= PROGRESS_INTERVAL) {
+    lastProgress += PROGRESS_INTERVAL;
+    float hz = (elapsed > 0) ? ((float)totalRows / (elapsed / 1000.0f)) : 0.0f;
+    Serial.print(elapsed / 1000);
+    Serial.print(" s -- ");
+    Serial.print(totalRows);
+    Serial.print(" samples -- ");
+    Serial.print(hz, 1);
+    Serial.println(" Hz");
   }
 
+  // ── Sample at ~71 Hz (drift-free timing) ──────────────────
   if (now - lastSample >= SAMPLE_INTERVAL_MS) {
-    lastSample = now;
+    lastSample += SAMPLE_INTERVAL_MS;
 
     lsm.read();
     sensors_event_t a, m, g, temp;
@@ -127,11 +124,18 @@ void loop() {
     az_filtered = alpha * (az_filtered + az_raw - az_prev);
     az_prev     = az_raw;
 
-    buffer[bufferIndex++] = {
-      elapsed, ax, ay, az_raw, az_filtered,
-      g.gyro.x, g.gyro.y, g.gyro.z
-    };
+    // Write one row directly — no RAM buffer, no explicit flush.
+    // The SD library sector-buffers internally (~10 rows per sector).
+    // Each sector write (~1–5 ms) is absorbed within the 14 ms interval.
+    dataFile.print(elapsed);        dataFile.print(',');
+    dataFile.print(ax, 4);          dataFile.print(',');
+    dataFile.print(ay, 4);          dataFile.print(',');
+    dataFile.print(az_raw, 4);      dataFile.print(',');
+    dataFile.print(az_filtered, 4); dataFile.print(',');
+    dataFile.print(g.gyro.x, 4);    dataFile.print(',');
+    dataFile.print(g.gyro.y, 4);    dataFile.print(',');
+    dataFile.println(g.gyro.z, 4);
 
-    if (bufferIndex >= BUFFER_SIZE) flushBuffer();
+    totalRows++;
   }
 }

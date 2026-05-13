@@ -2,7 +2,7 @@
 ATP-5 SD card data integrity validation.
 Copy ATP5_DAT.CSV from SD card into this folder, then run:
     python validate.py
-Pass: fs*600 +/- 1%, zero nulls, no gaps > (interval + 14) ms
+Pass: 60000 +/- 300 rows, zero nulls, no gaps > 15ms
 """
 
 import sys
@@ -53,16 +53,14 @@ print(f"  Duration:     {t.max():.1f} s")
 print(f"  Sample rate:  {fs} Hz")
 
 
-# ── Check 1: Row count (inferred from actual sample rate) ─────
+# ── Check 1: Row count ────────────────────────────────────────
 
-expected_rows = fs * 600
-tolerance     = round(expected_rows * 0.01)
-row_count     = len(df)
-row_pass      = abs(row_count - expected_rows) <= tolerance
+TARGET_ROWS = 60000
+TOLERANCE   = 300
+row_count   = len(df)
+row_pass    = abs(row_count - TARGET_ROWS) <= TOLERANCE
 
-print(f"\n  [1] Row count: {row_count}"
-      f"  (target: {expected_rows} +/- {tolerance}"
-      f"  [{fs} Hz x 600 s, 1% tol])")
+print(f"\n  [1] Row count: {row_count}  (target: {TARGET_ROWS} +/- {TOLERANCE})")
 print(f"      {'PASS' if row_pass else 'FAIL'}")
 
 
@@ -79,19 +77,16 @@ if not null_pass:
 print(f"      {'PASS' if null_pass else 'FAIL'}")
 
 
-# ── Check 3: No gaps > (sample interval + 14ms headroom) ─────
+# ── Check 3: No gaps > 15ms ───────────────────────────────────
 
-ts           = df_numeric['timestamp_ms'].dropna()
-diffs        = ts.diff().dropna()
-interval_ms  = round(1000 / fs)
-max_gap_limit = interval_ms + 14
-max_gap      = diffs.max()
-gap_count    = (diffs > max_gap_limit).sum()
-gap_pass     = gap_count == 0
+ts    = df_numeric['timestamp_ms'].dropna()
+diffs = ts.diff().dropna()
+max_gap   = diffs.max()
+gap_count = (diffs > 15).sum()
+gap_pass  = gap_count == 0
 
-print(f"\n  [3] Max timestamp gap: {max_gap:.1f} ms  (limit: {max_gap_limit} ms"
-      f"  [{interval_ms} ms interval + 14 ms])")
-print(f"      Gaps > {max_gap_limit} ms: {gap_count}")
+print(f"\n  [3] Max timestamp gap: {max_gap:.1f} ms  (limit: 15 ms)")
+print(f"      Gaps > 15ms: {gap_count}")
 print(f"      {'PASS' if gap_pass else 'FAIL'}")
 
 
@@ -112,8 +107,8 @@ fig, axes = plt.subplots(2, 1, figsize=(12, 7))
 # Timestamp gaps over time
 axes[0].plot(ts.values[1:] / 1000, diffs.values,
              linewidth=0.4, color='steelblue', label='sample gap (ms)')
-axes[0].axhline(max_gap_limit, color='red', linestyle='--', linewidth=0.8,
-                label=f'{max_gap_limit}ms limit')
+axes[0].axhline(15, color='red', linestyle='--', linewidth=0.8,
+                label='15ms limit')
 axes[0].set_ylabel('Gap (ms)')
 axes[0].set_xlabel('Time (s)')
 axes[0].set_title('ATP-5 -- Timestamp Gaps')
@@ -122,8 +117,8 @@ axes[0].grid(True, alpha=0.3)
 
 # Gap histogram
 axes[1].hist(diffs.values, bins=50, color='steelblue', edgecolor='none')
-axes[1].axvline(max_gap_limit, color='red', linestyle='--', linewidth=0.8,
-                label=f'{max_gap_limit}ms limit')
+axes[1].axvline(15, color='red', linestyle='--', linewidth=0.8,
+                label='15ms limit')
 axes[1].set_xlabel('Gap (ms)')
 axes[1].set_ylabel('Count')
 axes[1].set_title('Gap Distribution')

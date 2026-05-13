@@ -11,8 +11,8 @@ void setup() {
   delay(3000); 
 
   // Explicitly route Hardware Serial 1 to your pins
-  Serial1.setRx(PB7);
-  Serial1.setTx(PB6);
+  Serial1.setRx(PA3);
+  Serial1.setTx(PA2);
   Serial1.begin(9600);  
   
   Serial.println(F("--- STM32 GPS Test ---"));
