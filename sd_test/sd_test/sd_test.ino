@@ -6,32 +6,31 @@
 void setup() {
   Serial.begin(115200);
   delay(3000);
-  Serial.println("SD minimal test");
 
-  pinMode(SD_CS_PIN, OUTPUT);
-  digitalWrite(SD_CS_PIN, HIGH);
-  delay(500);
+  // Deselect BOTH devices before touching SPI
+  pinMode(PA4,  OUTPUT); digitalWrite(PA4,  HIGH); // IMU CS
+  pinMode(PB12, OUTPUT); digitalWrite(PB12, HIGH); // SD CS
+  delay(200);
 
   SPI.setMOSI(PA7);
   SPI.setMISO(PA6);
   SPI.setSCLK(PA5);
   SPI.begin();
-  delay(500);
+  delay(200);
 
-  Serial.print("SD.begin... ");
-  if (!SD.begin(SD_CS_PIN)) {
-    Serial.println("FAILED");
-  } else {
-    Serial.println("OK");
-    File f = SD.open("test.txt", FILE_WRITE);
-    if (f) {
-      f.println("hello");
-      f.close();
-      Serial.println("File written OK");
-    } else {
-      Serial.println("File open FAILED");
-    }
+  // IMU FIRST
+  Adafruit_LSM9DS1 lsm(PA4, -1);
+  if (!lsm.begin()) {
+    Serial.println("FATAL: IMU not found");
+    while (1) {}
   }
-}
+  Serial.println("IMU OK");
 
+  // SD SECOND
+  if (!SD.begin(PB12)) {
+    Serial.println("FATAL: SD not found");
+    while (1) {}
+  }
+  Serial.println("SD OK");
+}
 void loop() {}
