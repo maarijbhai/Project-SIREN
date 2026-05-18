@@ -1,0 +1,13 @@
+../Core/Src/main.c:103:6:BPC_Start	8	static
+../Core/Src/main.c:109:6:BPC_Stop	8	static
+../Core/Src/main.c:115:19:INA219_WriteReg	32	static
+../Core/Src/main.c:124:19:INA219_ReadReg	32	static
+../Core/Src/main.c:136:19:INA219_Init	16	static
+../Core/Src/main.c:144:7:INA219_ReadCurrent_mA	16	static
+../Core/Src/main.c:151:7:INA219_ReadBusVoltage_mV	16	static
+../Core/Src/main.c:158:7:ADC_ReadTemperature_C	32	static
+../Core/Src/main.c:171:6:StateMachine_Update	8	static
+../Core/Src/main.c:219:6:Data_Transmit	80	static
+../Core/Src/main.c:247:5:main	16	static
+../Core/Src/main.c:310:6:SystemClock_Config	88	static
+../Core/Src/main.c:360:6:Error_Handler	4	static,ignoring_inline_asm
