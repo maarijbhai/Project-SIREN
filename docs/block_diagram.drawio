@@ -1,0 +1,81 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="lfObmgDaocQWJ4pQawpJ">
+    <mxGraphModel dx="1030" dy="527" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-15" edge="1" parent="1" source="3msEv6x4UFljAV9vZOc5-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="MERCJ_vmyFrlsFl9nhkH-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3msEv6x4UFljAV9vZOc5-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Micro-Controller&lt;br&gt;&lt;i&gt;STM32F401 &quot;Black Pill&quot;&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="325" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="3msEv6x4UFljAV9vZOc5-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="GNNS Receiver&lt;div&gt;&lt;i&gt;uBlox NEO-6M&lt;/i&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="470" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="IMU&lt;div&gt;&lt;i&gt;LSM9DS1&lt;/i&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="565" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-19" edge="1" parent="1" source="MERCJ_vmyFrlsFl9nhkH-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="MERCJ_vmyFrlsFl9nhkH-18" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="SD Card" vertex="1">
+          <mxGeometry height="60" width="120" x="90" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-3" edge="1" parent="1" source="3msEv6x4UFljAV9vZOc5-2" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="3msEv6x4UFljAV9vZOc5-1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="530" y="318" />
+              <mxPoint x="415" y="320" />
+            </Array>
+            <mxPoint x="567.6400000000001" y="239.99999999999997" as="sourcePoint" />
+            <mxPoint x="370" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Networking Subsystem" vertex="1">
+          <mxGeometry height="40" width="240" x="265" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-5" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="3msEv6x4UFljAV9vZOc5-1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="565" y="390" as="sourcePoint" />
+            <mxPoint x="615" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-7" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" target="MERCJ_vmyFrlsFl9nhkH-2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="325" y="390" as="sourcePoint" />
+            <mxPoint x="375" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Power Subsystem" vertex="1">
+          <mxGeometry height="60" width="130" x="280" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-9" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=0.13;entryY=-0.013;entryDx=0;entryDy=0;entryPerimeter=0;" target="3msEv6x4UFljAV9vZOc5-1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points" />
+            <mxPoint x="341" y="210" as="sourcePoint" />
+            <mxPoint x="460" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="I2C" vertex="1">
+          <mxGeometry height="30" width="60" x="480" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="SPI" vertex="1">
+          <mxGeometry height="30" width="60" x="250" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-13" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="UART 9600 Baud" vertex="1">
+          <mxGeometry height="30" width="120" x="530" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="3.3V Regulated" vertex="1">
+          <mxGeometry height="30" width="60" x="280" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="13 byte beacon packet" vertex="1">
+          <mxGeometry height="30" width="60" x="395" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="MERCJ_vmyFrlsFl9nhkH-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Stored Data&amp;nbsp;&lt;div&gt;&lt;i&gt;Retrieved post-deployment&lt;/i&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="90" y="270" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

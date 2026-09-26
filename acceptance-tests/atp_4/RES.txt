@@ -1,0 +1,26 @@
+Live: -33.957740, 18.461245  HDOP=1.6  Sats=6  Sentence count: 55s remaining
+Live: -33.957739, 18.461217  HDOP=1.6  Sats=6  Sentence count: 45s remaining
+Live: -33.957743, 18.461174  HDOP=1.6  Sats=6  Sentence count: 35s remaining
+Live: -33.957757, 18.461126  HDOP=1.6  Sats=6  Sentence count: 25s remaining
+Live: -33.957762, 18.461095  HDOP=1.6  Sats=6  Sentence count: 15s remaining
+Live: -33.957775, 18.461067  HDOP=1.6  Sats=6  Sentence count: 5s remaining
+
+==========================================
+ATP-4: FINAL RESULTS
+==========================================
+NMEA sentences/min: 479  [FAIL — outside 60 +/- 3]
+
+Best position recorded:
+  Lat: -33.957741
+  Lon: 18.461261
+  HDOP: 1.6
+  Sats: 6
+
+==========================================
+Compare coordinates to Google Maps.
+Calculate error using Haversine formula.
+Screenshot this output for your report.
+==========================================
+
+Apple Maps:
+33.95776 S, 18.46102 E

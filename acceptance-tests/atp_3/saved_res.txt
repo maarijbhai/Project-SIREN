@@ -1,0 +1,21 @@
+Samples loaded: 1853
+Duration:       25.0s
+Sample rate:    74 Hz
+
+Baseline RMS:   0.2520 m/s²
+Threshold (2x): 0.5039 m/s²
+
+=== TAP DETECTION ===
+Tap events found: 3
+  Tap 1: t=17.48s  peak=-6.127 m/s²  duration=10 samples
+           ✅ PASS (≥2 consecutive samples)
+  Tap 2: t=19.92s  peak=3.418 m/s²  duration=7 samples
+           ✅ PASS (≥2 consecutive samples)
+  Tap 3: t=23.29s  peak=5.961 m/s²  duration=3 samples
+           ✅ PASS (≥2 consecutive samples)
+
+=== WELCH PSD ===
+Dominant frequency: 12.43 Hz
+Peak power:         -26.3 dB
+Noise floor:        -27.9 dB
+SNR:                1.6 dB

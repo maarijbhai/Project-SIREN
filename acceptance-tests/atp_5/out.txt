@@ -1,0 +1,13 @@
+00:02:29.313 -> SD OK -- recording to atp5_dat.csv
+00:02:29.313 -> Recording for 10 minutes -- do not touch
+00:02:29.313 -> Progress printed every 60 seconds
+00:03:29.298 -> 1 min elapsed -- 6000 rows written
+00:04:29.313 -> 2 min elapsed -- 12000 rows written
+00:05:29.297 -> 3 min elapsed -- 18000 rows written
+00:06:29.371 -> 4 min elapsed -- 24005 rows written
+00:07:29.307 -> 5 min elapsed -- 30000 rows written
+00:08:29.259 -> 6 min elapsed -- 36000 rows written
+00:09:29.264 -> 7 min elapsed -- 42000 rows written
+00:10:29.265 -> 8 min elapsed -- 48000 rows written
+00:11:29.256 -> 9 min elapsed -- 54000 rows written
+00:12:29.320 -> DONE -- pull SD card and run validate.py

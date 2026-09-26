@@ -1,0 +1,17 @@
+# Arduino / PlatformIO
+.pio/
+build/
+*.bin
+*.elf
+*.hex
+# Python
+__pycache__/
+*.pyc
+# KiCad
+*.kicad_prl
+*-backups/
+\#auto_saved_files\#
+fp-info-cache
+# OS
+.DS_Store
+Thumbs.db
